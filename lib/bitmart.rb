@@ -1,6 +1,6 @@
 require "bitmart/version"
+require "bitmart/api_account"
 
 module Bitmart
   class Error < StandardError; end
-  # Your code goes here...
 end
