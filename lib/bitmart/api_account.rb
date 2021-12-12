@@ -27,7 +27,7 @@ module Bitmart
                     }
                     request(
                         http_method: :get,
-                        endpoint: "wallet"
+                        endpoint: "wallet",
                         params: params
                     )
                 end
@@ -39,7 +39,7 @@ module Bitmart
                     }
                     request(
                         http_method: :get,
-                        endpoint: "wallet"
+                        endpoint: "wallet",
                         params: params
                     )
                 end
@@ -51,7 +51,7 @@ module Bitmart
                     }
                     request(
                         http_method: :get,
-                        endpoint: "withdraw/charge"
+                        endpoint: "withdraw/charge",
                         params: params
                     )
                 end
@@ -67,7 +67,7 @@ module Bitmart
                     }
                     request(
                         http_method: :post,
-                        endpoint: "withdraw/apply"
+                        endpoint: "withdraw/apply",
                         params: params
                     )
                 end
@@ -82,7 +82,7 @@ module Bitmart
                     }
                     request(
                         http_method: :get,
-                        endpoint: "deposit-withdraw/history"
+                        endpoint: "deposit-withdraw/history",
                         params: params
                     )
                 end
@@ -94,7 +94,7 @@ module Bitmart
                     }
                     request(
                         http_method: :get,
-                        endpoint: "deposit-withdraw/detail"
+                        endpoint: "deposit-withdraw/detail",
                         params: params
                     )
                 end

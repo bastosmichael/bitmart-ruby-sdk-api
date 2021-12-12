@@ -17,7 +17,7 @@ module Bitmart
                     params = {'exchange': 'bitmart'}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/contracts"
+                        endpoint: "ifcontract/contracts",
                         params: params
                     )
                 end
@@ -27,7 +27,7 @@ module Bitmart
                     params = {'contractID': contractId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/pnls"
+                        endpoint: "ifcontract/pnls",
                         params: params
                     )
                 end
@@ -36,7 +36,7 @@ module Bitmart
                 def get_indexes
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/indexes"
+                        endpoint: "ifcontract/indexes",
                         params: params
                     )
                 end
@@ -47,7 +47,7 @@ module Bitmart
                     params = {'contractID': contractId} if contractId   
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/tickers"
+                        endpoint: "ifcontract/tickers",
                         params: params
                     )
                 end
@@ -57,7 +57,7 @@ module Bitmart
                     params = {'contractID': contractId, 'startTime': startTime, 'endTime': endTime, 'unit': unit, 'resolution': resolution}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/quote"
+                        endpoint: "ifcontract/quote",
                         params: params
                     )
                 end
@@ -67,7 +67,7 @@ module Bitmart
                     params = {'indexID': indexId, 'startTime': startTime, 'endTime': endTime, 'unit': unit, 'resolution': resolution}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/indexquote"
+                        endpoint: "ifcontract/indexquote",
                         params: params
                     )
                 end
@@ -77,7 +77,7 @@ module Bitmart
                     params = {'contractID': contractId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/trades"
+                        endpoint: "ifcontract/trades",
                         params: params
                     )
                 end
@@ -88,7 +88,7 @@ module Bitmart
                     param['count'] = count if count
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/depth"
+                        endpoint: "ifcontract/depth",
                         params: params
                     )
                 end
@@ -98,7 +98,7 @@ module Bitmart
                     params = {'contractID': contractId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/fundingrate"
+                        endpoint: "ifcontract/fundingrate",
                         params: params
                     )
                 end
@@ -113,7 +113,7 @@ module Bitmart
                     end
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/userOrders"
+                        endpoint: "ifcontract/userOrders",
                         params: params
                     )
                 end
@@ -123,7 +123,7 @@ module Bitmart
                     params = {'contractID': contractId, 'orderID': orderId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/userOrderInfo"
+                        endpoint: "ifcontract/userOrderInfo",
                         params: params
                     )
                 end
@@ -142,7 +142,7 @@ module Bitmart
                     }
                     request(
                         http_method: :post,
-                        endpoint: "ifcontract/submitOrder"
+                        endpoint: "ifcontract/submitOrder",
                         params: params
                     )
                 end
@@ -152,7 +152,7 @@ module Bitmart
                     params = {'orders': orders}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/batchOrders"
+                        endpoint: "ifcontract/batchOrders",
                         params: params
                     )
                 end
@@ -162,7 +162,7 @@ module Bitmart
                     params = {'contractID': contractId, 'orders': orders}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/cancelOrders"
+                        endpoint: "ifcontract/cancelOrders",
                         params: params
                     )
                 end
@@ -174,7 +174,7 @@ module Bitmart
                         params['size'] = size if size
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/userTrades"
+                        endpoint: "ifcontract/userTrades",
                         params: params
                     )
                 end
@@ -184,7 +184,7 @@ module Bitmart
                     params = {'contractID': contractId, 'orderID': orderId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/orderTrades"
+                        endpoint: "ifcontract/orderTrades",
                         params: params
                     )
                 end
@@ -194,7 +194,7 @@ module Bitmart
                     params = {'coinCode': coinCode}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/userOrders"
+                        endpoint: "ifcontract/userOrders",
                         params: params
                     )
                 end
@@ -204,7 +204,7 @@ module Bitmart
                     params = {'contractID': contractId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/userPositions"
+                        endpoint: "ifcontract/userPositions",
                         params: params
                     )
                 end
@@ -214,7 +214,7 @@ module Bitmart
                     params = {'contractID': contractId, 'orderID': orderId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/userLiqRecords"
+                        endpoint: "ifcontract/userLiqRecords",
                         params: params
                     )
                 end
@@ -224,7 +224,7 @@ module Bitmart
                     params = {'contractID': contractId, 'positionID': positionId}
                     request(
                         http_method: :get,
-                        endpoint: "ifcontract/positionFee"
+                        endpoint: "ifcontract/positionFee",
                         params: params
                     )
                 end
@@ -234,7 +234,7 @@ module Bitmart
                     params = {'contract_id': contractId, 'position_id': positionId, 'vol': vol, 'oper_type': operType}
                     request(
                         http_method: :post,
-                        endpoint: "ifcontract/marginOper"
+                        endpoint: "ifcontract/marginOper",
                         params: params
                     )
                 end
