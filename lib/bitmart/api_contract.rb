@@ -2,7 +2,7 @@ module Bitmart
     module API
         module V1
             class Contract
-                API_ENDPOINT = 'https://api-cloud.bitmart.com/account/v1'.freeze
+                API_ENDPOINT = 'https://api-cloud.bitmart.com/contract/v1'.freeze
 
                 attr_reader :api_key
                 attr_reader :api_sign
@@ -53,7 +53,7 @@ module Bitmart
                 end
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/quote
-                def get_quote(self, contractId: int, startTime: int, endTime: int, unit: int, resolution: str):
+                def get_quote(contractId, startTime, endTime, unit, resolution)
                     params = {'contractID': contractId, 'startTime': startTime, 'endTime': endTime, 'unit': unit, 'resolution': resolution}
                     request(
                         http_method: :get,
@@ -63,7 +63,7 @@ module Bitmart
                 end
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/indexquote
-                def get_index_quote(indexId, startTime, endTime, unit, resolution):
+                def get_index_quote(indexId, startTime, endTime, unit, resolution)
                     params = {'indexID': indexId, 'startTime': startTime, 'endTime': endTime, 'unit': unit, 'resolution': resolution}
                     request(
                         http_method: :get,
@@ -85,8 +85,7 @@ module Bitmart
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/depth
                 def get_depth(contractId, count)
                     params = {'contractID': contractId}
-                    if count:
-                        param['count'] = count
+                    param['count'] = count if count
                     request(
                         http_method: :get,
                         endpoint: "ifcontract/depth"
