@@ -158,7 +158,7 @@ module Bitmart
                 end
 
                 # POST https://api-cloud.bitmart.com/contract/v1/ifcontract/cancelOrders
-                def post_cancel_order(contractId, orders):
+                def post_cancel_order(contractId, orders)
                     params = {'contractID': contractId, 'orders': orders}
                     request(
                         http_method: :get,
