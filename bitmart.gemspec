@@ -7,20 +7,10 @@ Gem::Specification.new do |spec|
   spec.email         = ["bastosmichael@gmail.com"]
 
   spec.summary       = "Ruby client for the BitMart API"
-  spec.description   = "Ruby client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
-  Feature
-  =========================
-  - Provides exchange quick trading API
-  - Easier withdrawal
-  - Efficiency, higher speeds, and lower latencies
-  - Priority in development and maintenance
-  - Dedicated and responsive technical support
-  - Provide webSocket apis calls"
+  spec.description   = "Ruby client for the BitMart Cloud API - http://developer-pro.bitmart.com. Features include Providing exchange quick trading API, Easier withdrawal, Efficiency, higher speeds, and lower latencies, Priority in development and maintenance, Dedicated and responsive technical support & Provide webSocket apis calls"
   spec.homepage      = "https://github.com/bastosmichael/bitmart-ruby-sdk-api"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
-
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/bastosmichael/bitmart-ruby-sdk-api"
