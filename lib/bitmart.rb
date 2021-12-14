@@ -1,3 +1,5 @@
+require "faraday"
+require "oj"
 require "bitmart/version"
 require "bitmart/api_account"
 require "bitmart/api_contract"

@@ -245,8 +245,8 @@ module Bitmart
                     @_client ||= Faraday.new(API_ENDPOINT) do |client|
                     client.request :url_encoded
                     client.adapter Faraday.default_adapter
-                    client.headers['X-BM-KEY'] = api_key if api_key.present?
-                    client.headers['X-BM-SIGN'] = api_sign if api_sign.present?
+                    client.headers['X-BM-KEY'] = api_key if api_key&.present?
+                    client.headers['X-BM-SIGN'] = api_sign if api_sign&.present?
                     end
                 end
 
