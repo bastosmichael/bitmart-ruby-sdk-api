@@ -33,7 +33,7 @@ module Bitmart
                 end
 
                 # GET https://api-cloud.bitmart.com/account/v1/deposit/address
-                def get_deposit_address(self, currency: str):
+                def get_deposit_address(currency)
                     params = {
                         'currency': currency
                     }

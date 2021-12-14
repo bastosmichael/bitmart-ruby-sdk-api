@@ -42,7 +42,7 @@ module Bitmart
                 end
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/tickers
-                def get_tickers(self, contractId: int):
+                def get_tickers(contractId)
                     params = {}
                     params = {'contractID': contractId} if contractId   
                     request(
@@ -148,7 +148,7 @@ module Bitmart
                 end
 
                 # POST https://api-cloud.bitmart.com/contract/v1/ifcontract/batchOrders
-                def post_submit_batch_order(self, orders):
+                def post_submit_batch_order(orders)
                     params = {'orders': orders}
                     request(
                         http_method: :get,
@@ -168,7 +168,7 @@ module Bitmart
                 end
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/userTrades
-                def get_user_trades(self, contractId: int, offset: int, size: int):
+                def get_user_trades(contractId, offset, size)
                     params = {'contractID': contractId}
                         params['offset'] = offset if offset
                         params['size'] = size if size
