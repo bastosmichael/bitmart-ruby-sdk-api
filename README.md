@@ -1,8 +1,71 @@
-# Bitmart
+[![Logo](./logo.png)](https://bitmart.com)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bitmart`. To experiment with that code, run `bin/console` for an interactive prompt.
+# BitMart-Ruby-SDK-API
+=========================
 
-TODO: Delete this and the text above, and describe your gem
+Python client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
+
+## Feature
+=========================
+- Provides exchange quick trading API
+- Easier withdrawal
+- Efficiency, higher speeds, and lower latencies
+- Priority in development and maintenance
+- Dedicated and responsive technical support
+- Provide webSocket apis calls
+
+## Installation
+=========================
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'bitmart'
+```
+
+And then execute:
+
+    $ bundle install
+
+Or install it yourself as:
+
+    $ gem install bitmart
+
+## Usage
+=========================
+* An example of a spot trade API
+* Replace it with your own API KEY
+* Run
+
+### API Example
+```ruby
+
+```
+
+### WebSocket Example
+```ruby
+
+```
+
+## Release Notes
+=========================
+
+** 2021-12-10 
+- Proof of concept Ruby gem build with working API end points.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+
+
+
+
+
+
+
 
 ## Installation
 
@@ -33,8 +96,3 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bitmart.
-
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
