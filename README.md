@@ -41,7 +41,19 @@ Or install it yourself as:
 
 ### API Example
 ```ruby
+require "bitmart"
 
+spot = Bitmart::API::V1::Spot.new("api_key")
+
+alts = spot.get_currencies["data"]["currencies"].map do |coin|
+         coin if coin["withdraw_enabled"] == true || coin["deposit_enabled"] == true
+       end.compact
+
+my_alts = spot.get_wallet["data"]["wallet"]
+          
+diff_alts = alts.map do |coin|
+              coin unless my_alts.detect {  |h| h["id"] == coin["id"] }
+            end.compact
 ```
 
 ### WebSocket Example
