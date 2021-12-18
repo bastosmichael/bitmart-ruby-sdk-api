@@ -45,9 +45,9 @@ require "bitmart"
 
 spot = Bitmart::API::V1::Spot.new("api_key")
 
-alts = spot.get_currencies["data"]["currencies"].map do |coin|
-         if coin["withdraw_enabled"] == true || coin["deposit_enabled"] == true
-           coin
+alts = spot.get_currencies["data"]["currencies"].map do |c|
+         if c["withdraw_enabled"] == true || c["deposit_enabled"] == true
+           c
          end
        end.compact
 
