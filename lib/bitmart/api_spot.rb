@@ -35,7 +35,7 @@ module Bitmart
                 def get_symbol_detail
                     request(
                         http_method: :get,
-                        endpoint: "symboles/details"
+                        endpoint: "symbols/details"
                     )
                 end
 
