@@ -46,13 +46,17 @@ require "bitmart"
 spot = Bitmart::API::V1::Spot.new("api_key")
 
 alts = spot.get_currencies["data"]["currencies"].map do |coin|
-         coin if coin["withdraw_enabled"] == true || coin["deposit_enabled"] == true
+         if coin["withdraw_enabled"] == true || coin["deposit_enabled"] == true
+           coin
+         end
        end.compact
 
 my_alts = spot.get_wallet["data"]["wallet"]
           
 diff_alts = alts.map do |coin|
-              coin unless my_alts.detect {  |h| h["id"] == coin["id"] }
+              unless my_alts.detect {  |h| h["id"] == coin["id"] }
+                coin
+              end
             end.compact
 ```
 
