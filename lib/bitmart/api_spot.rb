@@ -1,3 +1,5 @@
+require 'ap'
+
 module Bitmart
     module API
         module V1
@@ -258,14 +260,19 @@ module Bitmart
 
                 def client
                     @_client ||= Faraday.new(API_ENDPOINT) do |client|
-                    client.request :url_encoded
-                    client.adapter Faraday.default_adapter
-                    timestamp = Time.now.getutc.to_i.to_s
-                    signature = [timestamp,"#",api_memo,"#",client.params.to_s].join unless api_memo&.nil?
-                    signed = OpenSSL::HMAC.hexdigest("SHA256", signature, api_sign) if signature
-                    client.headers['X-BM-KEY'] = api_key unless api_key&.nil?
-                    client.headers['X-BM-SIGN'] = signed unless signed&.nil?
-                    client.headers['X-BM-TIMESTAMP'] = timestamp
+                        client.request :url_encoded
+                        client.adapter Faraday.default_adapter
+                        client.headers['X-BM-KEY'] = api_key unless api_key&.nil?
+                        unless api_memo&.nil? && api_sign&.nil?
+                            ap timestamp = Bitmart::API::System.new.get_system_time["data"]["server_time"].to_s
+                            ap client_params = client.params.to_s
+                            ap key = api_sign
+                            ap data = [timestamp,"#",api_memo,"#",client_params].join 
+                            ap digest = OpenSSL::Digest.new('sha256')
+                            ap signed = OpenSSL::HMAC.hexdigest(digest, key, data)
+                            client.headers['X-BM-SIGN'] = signed
+                            client.headers['X-BM-TIMESTAMP'] = timestamp
+                        end
                     end
                 end
               
