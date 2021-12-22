@@ -1,4 +1,5 @@
 require 'ap'
+require 'oj'
 
 module Bitmart
     module API
@@ -9,6 +10,8 @@ module Bitmart
                 attr_reader :api_key
                 attr_reader :api_sign
                 attr_reader :api_memo
+                attr_reader :timestamp
+                attr_reader :signature
 
                 def initialize(api_key = nil, api_sign = nil, api_memo = nil)
                     @api_key = api_key
@@ -120,11 +123,11 @@ module Bitmart
                 # POST https://api-cloud.bitmart.com/spot/v1/submit_order
                 def post_submit_limit_buy_order(symbol, size='', price='')
                     params = {
-                        'symbol': symbol,
+                        'price': price,
                         'side': 'buy',
-                        'type': 'limit',
                         'size': size,
-                        'price': price
+                        'symbol': symbol,
+                        'type': 'limit',
                     }
                     request(
                         http_method: :post,
@@ -135,11 +138,11 @@ module Bitmart
 
                 def post_submit_limit_sell_order(symbol, size='', price='')
                     params = {
-                        'symbol': symbol,
+                        'price': price,
                         'side': 'sell',
-                        'type': 'limit',
                         'size': size,
-                        'price': price
+                        'symbol': symbol,
+                        'type': 'limit',
                     }
                     request(
                         http_method: :post,
@@ -150,10 +153,10 @@ module Bitmart
 
                 def post_submit_market_sell_order(symbol, size='')
                     params = {
-                        'symbol': symbol,
                         'side': 'sell',
+                        'size': size,
+                        'symbol': symbol,
                         'type': 'market',
-                        'size': size
                     }
                     request(
                         http_method: :post,
@@ -164,10 +167,10 @@ module Bitmart
 
                 def post_submit_market_buy_order(symbol, notional='')
                     params = {
-                        'symbol': symbol,
+                        'notional': notional,
                         'side': 'buy',
+                        'symbol': symbol,
                         'type': 'market',
-                        'notional': notional
                     }
                     request(
                         http_method: :post,
@@ -179,8 +182,8 @@ module Bitmart
                 # POST https://api-cloud.bitmart.com/spot/v2/cancel_order
                 def post_cancel_order(symbol, orderId)
                     params = {
+                        'order_id': orderId,
                         'symbol': symbol,
-                        'order_id': orderId
                     }
                     request(
                         http_method: :post,
@@ -192,8 +195,8 @@ module Bitmart
                 # POST https://api-cloud.bitmart.com/spot/v1/cancel_orders
                 def post_cancel_orders(symbol, side)
                     params = {
+                        'side': side,
                         'symbol': symbol,
-                        'side': side
                     }
                     request(
                         http_method: :post,
@@ -205,8 +208,8 @@ module Bitmart
                 # GET https://api-cloud.bitmart.com/spot/v1/order_detail
                 def get_user_order_detail(symbol, orderId)
                     params = {
+                        'order_id': orderId,
                         'symbol': symbol,
-                        'order_id': orderId
                     }
                     request(
                         http_method: :get,
@@ -218,10 +221,10 @@ module Bitmart
                 # GET https://api-cloud.bitmart.com/spot/v1/orders
                 def get_user_orders(symbol, offset, limit, status)
                     params = {
-                        'symbol': symbol,
-                        'offset': offset,
                         'limit': limit,
-                        'status': status
+                        'offset': offset,
+                        'status': status,
+                        'symbol': symbol,
                     }
                     request(
                         http_method: :get,
@@ -233,8 +236,8 @@ module Bitmart
                 # GET https://api-cloud.bitmart.com/spot/v1/trades
                 def get_user_order_trades(symbol, orderId)
                     params = {
-                        'symbol': symbol,
-                        'order_id': orderId
+                        'order_id': orderId,
+                        'symbol': symbol
                     }
                     request(
                         http_method: :get,
@@ -245,9 +248,9 @@ module Bitmart
 
                 def get_user_trades(symbol, offset, limit)
                     params = {
-                        'symbol': symbol,
+                        'limit': limit,
                         'offset': offset,
-                        'limit': limit
+                        'symbol': symbol,        
                     }
                     request(
                         http_method: :get,
@@ -263,21 +266,24 @@ module Bitmart
                         client.request :url_encoded
                         client.adapter Faraday.default_adapter
                         client.headers['X-BM-KEY'] = api_key unless api_key&.nil?
-                        unless api_memo&.nil? && api_sign&.nil?
-                            ap timestamp = Bitmart::API::System.new.get_system_time["data"]["server_time"].to_s
-                            ap client_params = client.params.to_s
-                            ap key = api_sign
-                            ap data = [timestamp,"#",api_memo,"#",client_params].join 
-                            ap digest = OpenSSL::Digest.new('sha256')
-                            ap signed = OpenSSL::HMAC.hexdigest(digest, key, data)
-                            client.headers['X-BM-SIGN'] = signed
-                            client.headers['X-BM-TIMESTAMP'] = timestamp
-                        end
+                        ap signature
+                        client.headers['X-BM-SIGN'] = @signature if @signature
+                        ap timestamp
+                        client.headers['X-BM-TIMESTAMP'] = @timestamp if @timestamp
                     end
                 end
               
                 def request(http_method:, endpoint:, params: {})
+                    unless http_method == :post && api_memo&.nil? && api_sign&.nil?
+                        @timestamp = Bitmart::API::System.new.get_system_time["data"]["server_time"].to_s
+                        ap client_params = URI.encode_www_form(params)
+                        ap key = api_sign
+                        ap data = [timestamp,"#",api_memo,"#",client_params].join 
+                        digest = OpenSSL::Digest.new('sha256')
+                        ap @signature = OpenSSL::HMAC.hexdigest(digest, key, data)
+                    end
                     response = client.public_send(http_method, endpoint, params)
+                    ap response.inspect
                     Oj.load(response.body)
                 end
             end
