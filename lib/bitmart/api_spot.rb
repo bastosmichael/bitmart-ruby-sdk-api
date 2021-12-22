@@ -265,22 +265,20 @@ module Bitmart
                     @_client ||= Faraday.new(API_ENDPOINT) do |client|
                         client.request :url_encoded
                         client.adapter Faraday.default_adapter
+                        client.headers["Content-Type"] = "application/json"
                         client.headers['X-BM-KEY'] = api_key unless api_key&.nil?
                         client.headers['X-BM-SIGN'] = @signature if @signature
-                        puts "signature: " + @signature
                         client.headers['X-BM-TIMESTAMP'] = @timestamp if @timestamp
-                        puts "timestamp: " + @timestamp
                     end
                 end
               
                 def request(http_method:, endpoint:, params: {})
                     unless http_method == :post && api_memo&.nil? && api_sign&.nil?
                         @timestamp = Bitmart::API::System.new.get_system_time["data"]["server_time"].to_s
-                        puts "data: " + data = [timestamp,"#",api_memo,"#",Oj.dump(params)].join 
+                        data = [timestamp,"#",api_memo,"#",Oj.dump(params)].join 
                         @signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), api_sign, data)
                     end
                     response = client.public_send(http_method, endpoint, Oj.dump(params))
-                    puts "response: " + response.inspect
                     Oj.load(response.body)
                 end
             end
