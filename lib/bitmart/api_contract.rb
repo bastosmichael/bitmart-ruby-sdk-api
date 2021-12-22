@@ -61,7 +61,7 @@ module Bitmart
                     params = {
                                 'contractID': contractId, 
                                 'endTime': endTime, 
-                                'resolution': resolution
+                                'resolution': resolution,
                                 'startTime': startTime, 
                                 'unit': unit, 
                             }
