@@ -7,6 +7,8 @@ module Bitmart
                 attr_reader :api_key
                 attr_reader :api_sign
                 attr_reader :api_memo
+                attr_reader :timestamp
+                attr_reader :signature
 
                 def initialize(api_key = nil, api_sign = nil, api_memo = nil)
                     @api_key = api_key
@@ -245,18 +247,20 @@ module Bitmart
 
                 def client
                     @_client ||= Faraday.new(API_ENDPOINT) do |client|
-                    client.request :url_encoded
-                    client.adapter Faraday.default_adapter
-                    timestamp = Time.now.getutc.to_i.to_s
-                    signature = [timestamp,"#",api_memo,"#",client.params.to_s].join unless api_memo&.nil?
-                    signed = OpenSSL::HMAC.hexdigest("SHA256", signature, api_sign) if signature
-                    client.headers['X-BM-KEY'] = api_key unless api_key&.nil?
-                    client.headers['X-BM-SIGN'] = signed unless signed&.nil?
-                    client.headers['X-BM-TIMESTAMP'] = timestamp
+                        client.request :url_encoded
+                        client.adapter Faraday.default_adapter
+                        client.headers['X-BM-KEY'] = api_key unless api_key&.nil?
+                        client.headers['X-BM-SIGN'] = @signature if @signature
+                        client.headers['X-BM-TIMESTAMP'] = @timestamp if @timestamp
                     end
                 end
               
                 def request(http_method:, endpoint:, params: {})
+                    unless http_method == :post && api_memo&.nil? && api_sign&.nil?
+                        @timestamp = Bitmart::API::System.new.get_system_time["data"]["server_time"].to_s
+                        data = [timestamp,"#",api_memo,"#",URI.encode_www_form(params)].join 
+                        @signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), api_sign, data)
+                    end
                     response = client.public_send(http_method, endpoint, params)
                     Oj.load(response.body)
                 end
