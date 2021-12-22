@@ -276,11 +276,12 @@ module Bitmart
                 def request(http_method:, endpoint:, params: {})
                     unless http_method == :post && api_memo&.nil? && api_sign&.nil?
                         @timestamp = Bitmart::API::System.new.get_system_time["data"]["server_time"].to_s
-                        ap client_params = URI.encode_www_form(params)
+                        # ap client_params = URI.encode_www_form(params)
+                        ap client_params = Oj.dump(params)
                         ap key = api_sign
                         ap data = [timestamp,"#",api_memo,"#",client_params].join 
                         digest = OpenSSL::Digest.new('sha256')
-                        ap @signature = OpenSSL::HMAC.hexdigest(digest, key, data)
+                        @signature = OpenSSL::HMAC.hexdigest(digest, key, data)
                     end
                     response = client.public_send(http_method, endpoint, params)
                     ap response.inspect
