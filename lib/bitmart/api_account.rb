@@ -80,9 +80,9 @@ module Bitmart
                 def get_deposit_withdraw_history(currency, operationType, offset, limit)
                     params = {
                         'currency': currency,
-                        'operation_type': operationType,
+                        'limit': limit,
                         'offset': offset,
-                        'limit': limit
+                        'operation_type': operationType,
                     }
                     request(
                         http_method: :get,

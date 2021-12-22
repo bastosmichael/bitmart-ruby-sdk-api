@@ -58,7 +58,13 @@ module Bitmart
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/quote
                 def get_quote(contractId, startTime, endTime, unit, resolution)
-                    params = {'contractID': contractId, 'startTime': startTime, 'endTime': endTime, 'unit': unit, 'resolution': resolution}
+                    params = {
+                                'contractID': contractId, 
+                                'endTime': endTime, 
+                                'resolution': resolution
+                                'startTime': startTime, 
+                                'unit': unit, 
+                            }
                     request(
                         http_method: :get,
                         endpoint: "ifcontract/quote",
@@ -68,7 +74,13 @@ module Bitmart
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/indexquote
                 def get_index_quote(indexId, startTime, endTime, unit, resolution)
-                    params = {'indexID': indexId, 'startTime': startTime, 'endTime': endTime, 'unit': unit, 'resolution': resolution}
+                    params = {
+                                'endTime': endTime, 
+                                'indexID': indexId, 
+                                'resolution': resolution,
+                                'startTime': startTime, 
+                                'unit': unit, 
+                            }
                     request(
                         http_method: :get,
                         endpoint: "ifcontract/indexquote",
@@ -135,14 +147,14 @@ module Bitmart
                 # POST https://api-cloud.bitmart.com/contract/v1/ifcontract/submitOrder
                 def post_submit_order(contractId, category, way, openType, leverage, customId, price, vol)
                     params = {
-                        'contract_id': contractId,
                         'category': category,
-                        'way': way,
-                        'open_type': openType,
-                        'leverage': leverage,
+                        'contract_id': contractId,
                         'custom_id': customId,
+                        'leverage': leverage,
+                        'open_type': openType,
                         'price': price,
-                        'vol': vol
+                        'vol': vol,
+                        'way': way,
                     }
                     request(
                         http_method: :post,
@@ -215,7 +227,10 @@ module Bitmart
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/userLiqRecords
                 def get_user_liq_records(contractId, orderId)
-                    params = {'contractID': contractId, 'orderID': orderId}
+                    params = {
+                                'contractID': contractId, 
+                                'orderID': orderId
+                            }
                     request(
                         http_method: :get,
                         endpoint: "ifcontract/userLiqRecords",
@@ -225,7 +240,10 @@ module Bitmart
 
                 # GET https://api-cloud.bitmart.com/contract/v1/ifcontract/positionFee
                 def get_position_fee(contractId, positionId)
-                    params = {'contractID': contractId, 'positionID': positionId}
+                    params = {
+                                'contractID': contractId, 
+                                'positionID': positionId
+                            }
                     request(
                         http_method: :get,
                         endpoint: "ifcontract/positionFee",
@@ -235,7 +253,12 @@ module Bitmart
 
                 # POST https://api-cloud.bitmart.com/contract/v1/ifcontract/marginOper
                 def post_margin_oper(contractId, positionId, vol, operType)
-                    params = {'contract_id': contractId, 'position_id': positionId, 'vol': vol, 'oper_type': operType}
+                    params = {
+                                'contract_id': contractId, 
+                                'oper_type': operType,
+                                'position_id': positionId, 
+                                'vol': vol, 
+                            }
                     request(
                         http_method: :post,
                         endpoint: "ifcontract/marginOper",
