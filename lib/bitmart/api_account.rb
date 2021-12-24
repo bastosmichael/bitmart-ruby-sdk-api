@@ -7,8 +7,8 @@ module Bitmart
                 attr_reader :api_key
                 attr_reader :api_sign
                 attr_reader :api_memo
-                attr_reader :timestamp
-                attr_reader :signature
+                attr_accessor :timestamp
+                attr_accessor :signature
 
                 def initialize(api_key = nil, api_sign = nil, api_memo = nil)
                     @api_key = api_key
