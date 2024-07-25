@@ -1,21 +1,16 @@
 [![Logo](./logo.png)](https://bitmart.com)
 
 # BitMart-Ruby-SDK-API
-=========================
 
-Python client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
+Ruby client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
 
 ## Feature
-=========================
+
 - Provides exchange quick trading API
 - Easier withdrawal
 - Efficiency, higher speeds, and lower latencies
-- Priority in development and maintenance
 - Dedicated and responsive technical support
-- Provide webSocket apis calls
-
-## Installation
-=========================
+- Comprehensive API coverage (Spot, Contract, Account)
 
 ## Installation
 
@@ -34,30 +29,23 @@ Or install it yourself as:
     $ gem install bitmart
 
 ## Usage
-=========================
-* An example of a spot trade API
-* Replace it with your own API KEY
-* Run
 
-### API Example
+Here's an example of using the Spot API:
+
 ```ruby
 require "bitmart"
 
 spot = Bitmart::API::V1::Spot.new("api_key")
+currencies = spot.get_currencies
+my_wallet = spot.get_wallet
+```
 
-alts = spot.get_currencies["data"]["currencies"].map do |c|
-         if c["withdraw_enabled"] == true || c["deposit_enabled"] == true
-           c
-         end
-       end.compact
+And an example of using the Contract API:
 
-my_alts = spot.get_wallet["data"]["wallet"]
-          
-diff_alts = alts.map do |coin|
-              unless my_alts.detect {  |h| h["id"] == coin["id"] }
-                coin
-              end
-            end.compact
+```ruby
+contract = Bitmart::API::V1::Contract.new("api_key")
+contracts = contract.get_contracts
+tickers = contract.get_tickers
 ```
 
 ## Development
@@ -71,10 +59,13 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 Bug reports and pull requests are welcome on GitHub at https://github.com/bastosmichael/bitmart.
 
 ## Release Notes
-=========================
 
-** 2021-12-10 
-- Proof of concept Ruby gem build with working API end points.
+**2021-12-10 (v0.1.3)**
+- Added Contract API support
+- Implemented Account API
+- Enhanced error handling and request signing
+- Improved documentation and examples
+- Refactored code for better maintainability
 
 ## License
 
