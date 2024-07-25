@@ -1,21 +1,17 @@
 [![Logo](./logo.png)](https://bitmart.com)
 
 # BitMart-Ruby-SDK-API
-=========================
 
-Python client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
+Ruby client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
 
-## Feature
-=========================
+## Features
+
 - Provides exchange quick trading API
 - Easier withdrawal
 - Efficiency, higher speeds, and lower latencies
 - Priority in development and maintenance
 - Dedicated and responsive technical support
-- Provide webSocket apis calls
-
-## Installation
-=========================
+- Provide WebSocket API calls
 
 ## Installation
 
@@ -27,37 +23,38 @@ gem 'bitmart'
 
 And then execute:
 
-    $ bundle install
+```
+$ bundle install
+```
 
 Or install it yourself as:
 
-    $ gem install bitmart
+```
+$ gem install bitmart
+```
 
 ## Usage
-=========================
-* An example of a spot trade API
-* Replace it with your own API KEY
-* Run
 
-### API Example
+Here's an example of using the spot trade API:
+
 ```ruby
 require "bitmart"
 
 spot = Bitmart::API::V1::Spot.new("api_key")
 
 alts = spot.get_currencies["data"]["currencies"].map do |c|
-         if c["withdraw_enabled"] == true || c["deposit_enabled"] == true
-           c
-         end
-       end.compact
+  if c["withdraw_enabled"] == true || c["deposit_enabled"] == true
+    c
+  end
+end.compact
 
 my_alts = spot.get_wallet["data"]["wallet"]
           
 diff_alts = alts.map do |coin|
-              unless my_alts.detect {  |h| h["id"] == coin["id"] }
-                coin
-              end
-            end.compact
+  unless my_alts.detect { |h| h["id"] == coin["id"] }
+    coin
+  end
+end.compact
 ```
 
 ## Development
@@ -68,13 +65,12 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bastosmichael/bitmart.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bastosmichael/bitmart-ruby-sdk-api.
 
 ## Release Notes
-=========================
 
-** 2021-12-10 
-- Proof of concept Ruby gem build with working API end points.
+**2021-12-10**
+- Proof of concept Ruby gem build with working API endpoints.
 
 ## License
 
