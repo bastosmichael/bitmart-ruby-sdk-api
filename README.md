@@ -1,21 +1,18 @@
 [![Logo](./logo.png)](https://bitmart.com)
 
 # BitMart-Ruby-SDK-API
-=========================
 
-Python client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
+Ruby client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
 
-## Feature
-=========================
+## Features
+
 - Provides exchange quick trading API
 - Easier withdrawal
 - Efficiency, higher speeds, and lower latencies
 - Priority in development and maintenance
 - Dedicated and responsive technical support
-- Provide webSocket apis calls
-
-## Installation
-=========================
+- Provides WebSocket API calls
+- Supports Spot, Contract, and Account operations
 
 ## Installation
 
@@ -27,38 +24,80 @@ gem 'bitmart'
 
 And then execute:
 
-    $ bundle install
+```
+$ bundle install
+```
 
 Or install it yourself as:
 
-    $ gem install bitmart
+```
+$ gem install bitmart
+```
+
+## Configuration
+
+Before using the BitMart API, you need to set up your API keys. You can obtain these from your BitMart account.
+
+```ruby
+api_key = 'your_api_key'
+api_secret = 'your_api_secret'
+api_memo = 'your_api_memo'
+```
 
 ## Usage
-=========================
-* An example of a spot trade API
-* Replace it with your own API KEY
-* Run
 
-### API Example
+Here's an example of using the Spot API:
+
 ```ruby
-require "bitmart"
+require 'bitmart'
 
-spot = Bitmart::API::V1::Spot.new("api_key")
+spot = Bitmart::API::V1::Spot.new(api_key, api_secret, api_memo)
 
-alts = spot.get_currencies["data"]["currencies"].map do |c|
-         if c["withdraw_enabled"] == true || c["deposit_enabled"] == true
-           c
-         end
-       end.compact
+# Get all currencies
+currencies = spot.get_currencies
 
-my_alts = spot.get_wallet["data"]["wallet"]
-          
-diff_alts = alts.map do |coin|
-              unless my_alts.detect {  |h| h["id"] == coin["id"] }
-                coin
-              end
-            end.compact
+# Get user's wallet
+wallet = spot.get_wallet
+
+# Place a limit buy order
+symbol = 'BTC_USDT'
+size = '0.1'
+price = '30000'
+response = spot.post_submit_limit_buy_order(symbol, size, price)
 ```
+
+## API Modules
+
+### Account
+
+The Account module provides methods for managing your BitMart account, including:
+
+- Getting account currencies
+- Retrieving wallet information
+- Managing deposits and withdrawals
+
+### Contract
+
+The Contract module offers functionality for futures trading, including:
+
+- Retrieving contract information
+- Managing positions
+- Placing and canceling orders
+
+### Spot
+
+The Spot module provides methods for spot trading, including:
+
+- Getting market data (tickers, order books, etc.)
+- Placing and canceling orders
+- Retrieving user's orders and trades
+
+### System
+
+The System module offers general system-related methods:
+
+- Getting system time
+- Checking system status
 
 ## Development
 
@@ -68,13 +107,14 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bastosmichael/bitmart.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bastosmichael/bitmart. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/bastosmichael/bitmart/blob/master/CODE_OF_CONDUCT.md).
 
 ## Release Notes
-=========================
 
-** 2021-12-10 
-- Proof of concept Ruby gem build with working API end points.
+### v0.1.3 (2021-12-10)
+- Proof of concept Ruby gem build with working API endpoints.
+- Added support for Spot, Contract, and Account API modules.
+- Implemented system time and status methods.
 
 ## License
 
