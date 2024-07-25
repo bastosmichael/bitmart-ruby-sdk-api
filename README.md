@@ -1,21 +1,17 @@
 [![Logo](./logo.png)](https://bitmart.com)
 
 # BitMart-Ruby-SDK-API
-=========================
 
-Python client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
+Ruby client for the [BitMart Cloud API](http://developer-pro.bitmart.com).
 
-## Feature
-=========================
+## Features
+
 - Provides exchange quick trading API
 - Easier withdrawal
 - Efficiency, higher speeds, and lower latencies
 - Priority in development and maintenance
 - Dedicated and responsive technical support
-- Provide webSocket apis calls
-
-## Installation
-=========================
+- Provides WebSocket API calls
 
 ## Installation
 
@@ -27,38 +23,55 @@ gem 'bitmart'
 
 And then execute:
 
-    $ bundle install
+```
+$ bundle install
+```
 
 Or install it yourself as:
 
-    $ gem install bitmart
+```
+$ gem install bitmart
+```
 
 ## Usage
-=========================
-* An example of a spot trade API
-* Replace it with your own API KEY
-* Run
 
-### API Example
+Here's a simple example of using the Spot API:
+
 ```ruby
 require "bitmart"
 
-spot = Bitmart::API::V1::Spot.new("api_key")
+# Initialize the Spot API client
+spot = Bitmart::API::V1::Spot.new("your_api_key", "your_api_secret", "your_memo")
 
-alts = spot.get_currencies["data"]["currencies"].map do |c|
-         if c["withdraw_enabled"] == true || c["deposit_enabled"] == true
-           c
-         end
-       end.compact
+# Get all currencies
+currencies = spot.get_currencies
 
-my_alts = spot.get_wallet["data"]["wallet"]
-          
-diff_alts = alts.map do |coin|
-              unless my_alts.detect {  |h| h["id"] == coin["id"] }
-                coin
-              end
-            end.compact
+# Get user's wallet
+wallet = spot.get_wallet
+
+# Place a limit buy order
+symbol = "BTC_USDT"
+size = "0.1"
+price = "30000"
+order = spot.post_submit_limit_buy_order(symbol, size, price)
+
+puts "Order placed: #{order}"
 ```
+
+## API Documentation
+
+The SDK provides access to the following API modules:
+
+- `Bitmart::API::V1::Spot`: Spot trading operations
+- `Bitmart::API::V1::Contract`: Contract trading operations
+- `Bitmart::API::V1::Account`: Account management
+- `Bitmart::API::System`: System-wide operations
+
+For detailed API documentation, please refer to the [BitMart API Documentation](http://developer-pro.bitmart.com).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/bastosmichael/bitmart-ruby-sdk-api. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/bastosmichael/bitmart-ruby-sdk-api/blob/master/CODE_OF_CONDUCT.md).
 
 ## Development
 
@@ -66,15 +79,12 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/bastosmichael/bitmart.
-
 ## Release Notes
-=========================
 
-** 2021-12-10 
-- Proof of concept Ruby gem build with working API end points.
+### v0.1.3 (2021-12-10)
+- Proof of concept Ruby gem build with working API endpoints
+- Implemented Spot, Contract, Account, and System API modules
+- Added basic error handling and request signing
 
 ## License
 
